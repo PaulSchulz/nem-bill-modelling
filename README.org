@@ -1,0 +1,83 @@
+* NEM Modelling
+
+** Overview
+This repository contains Python scripts to download, process, and aggregate
+electricity price and demand data from the Australian Energy Market Operator
+(AEMO). The scripts store the processed data in an SQLite database and provide
+aggregated hourly statistics.
+
+** Features
+In Python:
+- Downloads price and demand data from AEMO using `wget`
+- Stores data in an SQLite database (`model.db`)
+- Aggregates data into hourly bins
+- Calculates:
+  - Average, minimum, and maximum values for demand and RRP (Regional Reference Price)
+  - Sum and sum of squares for demand and RRP (for variance calculation)
+  - Count of records per hour
+
+** Installation
+*** Prerequisites
+Ensure you have Python3 installed along with the required dependencies. You can install them using:
+
+#+BEGIN_SRC sh
+pip install -r requirements.txt
+#+END_SRC
+
+It might also be worthwhile using a virtual environment, prior to installing
+additional requirements, by using:
+
+#+BEGIN_SRC sh
+  python -m venv venv
+  . venv/bin/activate
+#+END_SRC
+
+*** Configuration
+The database configuration is stored in `config.yaml`:
+
+#+BEGIN_SRC yaml
+database:
+  path: model.db
+#+END_SRC
+
+Modify this file if you wish to change the database path.
+
+This configuration files also contains details of the year and dlownload
+location for the downloaded AEMO CSV files.
+
+** Usage
+*** Step 1: Download Data
+Run the script to download CSV files from AEMO:
+
+#+BEGIN_SRC sh
+python download_data.py
+#+END_SRC
+
+*** Step 2: Import Data into SQLite
+After downloading, import the data into the SQLite database:
+
+#+BEGIN_SRC sh
+python import_data.py
+#+END_SRC
+
+*** Step 3: Aggregate Data
+Run the aggregation script to calculate hourly statistics:
+
+#+BEGIN_SRC sh
+python hourly_aggregation_query.py
+#+END_SRC
+
+** Output
+The aggregated data is stored in the `price_and_demand_aggregation` table in `model.db`. The table schema includes:
+
+- `REGION` (Text)
+- `HOUR` (Timestamp, rounded to the hour)
+- `COUNT` (Number of records aggregated per hour)
+- `AVG_DEMAND`, `MIN_DEMAND`, `MAX_DEMAND` (Demand statistics)
+- `AVG_RRP`, `MIN_RRP`, `MAX_RRP` (RRP statistics)
+- `SUM_RRP`, `SUM_RRP_SQUARED` (For variance calculation)
+- `SUM_DEMAND`, `SUM_DEMAND_SQUARED` (For variance calculation)
+
+** License
+This project is licensed under the MIT License.
+
