@@ -18,14 +18,19 @@ In Python:
 
 ** Installation
 *** Prerequisites
-Ensure you have Python3 installed along with the required dependencies. You can install them using:
+Ensure you have Python3 installed along with the required dependencies. You can
+install them using:
 
 #+BEGIN_SRC sh
 pip install -r requirements.txt
 #+END_SRC
 
-It might also be worthwhile using a virtual environment, prior to installing
-additional requirements, by using:
+Key dependencies include:
+- sqlite3 (for database operations)
+- PyYAML (for configuration parsing)
+
+Depending on your Python environment, it might also be worthwhile using a
+virtual environment, prior to installing additional requirements, by using:
 
 #+BEGIN_SRC sh
   python -m venv venv
@@ -68,7 +73,8 @@ python hourly_aggregation_query.py
 #+END_SRC
 
 ** Output
-The aggregated data is stored in the `price_and_demand_aggregation` table in `model.db`. The table schema includes:
+The aggregated data is stored in the `price_and_demand_aggregation` table in
+`model.db`. The table schema includes:
 
 - `REGION` (Text)
 - `HOUR` (Timestamp, rounded to the hour)
