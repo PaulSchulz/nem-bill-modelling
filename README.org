@@ -42,13 +42,19 @@ The database configuration is stored in `config.yaml`:
 
 #+BEGIN_SRC yaml
 database:
-  path: model.db
+  path: data.db
 #+END_SRC
 
 Modify this file if you wish to change the database path.
 
-This configuration files also contains details of the year and dlownload
+This configuration files also contains details of the year and download
 location for the downloaded AEMO CSV files.
+
+#+BEGIN_SRC yaml
+data:
+  year: 2024
+  path: ./data
+#+END_SRC
 
 ** Usage
 *** Step 1: Download Data
