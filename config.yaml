@@ -1,0 +1,7 @@
+---
+data:
+  year: 2024
+  path: ./data
+database:
+  path: data.db
+  
