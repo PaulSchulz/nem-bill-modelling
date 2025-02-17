@@ -10,28 +10,35 @@ import yaml
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 # Read Configuration
-output_dir = config["data"]["path"]
-year = config["data"]["year"]
+debug      = config["debug"]
+data_year  = config["data"]["year"]
+data_path  = config["data"]["path"]
+# db_path   = config["database"]["path"]
+
+if debug == True:
+    print("Debug: ", debug)
+    print("Data year: ",      data_year)
+    print("Data directory: ", data_path)
 
 ##############################################################################
 # Define states and months
 states = ["NSW1", "QLD1", "VIC1", "SA1", "TAS1"]
 
 # Generate a list of months in YYYYMM format
-months = [f"{year}{str(month).zfill(2)}" for month in range(1, 13)]
+months = [f"{data_year}{str(month).zfill(2)}" for month in range(1, 13)]
 
 # Base URL
 base_url = "https://aemo.com.au/aemo/data/nem/priceanddemand"
 
 # Output directory
-os.makedirs(output_dir, exist_ok=True)
+os.makedirs(data_path, exist_ok=True)
 
 # Iterate through states and months and download files
 for state in states:
              for month in months:
                           file_name = f"PRICE_AND_DEMAND_{month}_{state}.csv"
                           url = f"{base_url}/{file_name}"
-                          output_path = os.path.join(output_dir, file_name)
+                          output_path = os.path.join(data_path, file_name)
 
                           # Use wget to download the file
                           try:

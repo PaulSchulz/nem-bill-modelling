@@ -11,8 +11,14 @@ from datetime import datetime
 with open("config.yaml", "r") as config_file:
     config = yaml.safe_load(config_file)
 # Read Configuration
+debug     = config["debug"]
 input_dir = config["data"]["path"]
-db_path = config["database"]["path"]
+db_path   = config["database"]["path"]
+
+if debug == True:
+    print("Debug: ", debug)
+    print("Input data directory: ", input_dir)
+    print("Database file: ", db_path)
 
 ##############################################################################
 # Database table name and schema

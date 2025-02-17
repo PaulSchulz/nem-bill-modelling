@@ -1,0 +1,17 @@
+flat_rate:
+  price_per_kwh: 0.30
+
+tou:
+  peak_price: 0.50
+  shoulder_price: 0.35
+  off_peak_price: 0.20
+  peak_hours: [17, 18, 19, 20, 21]
+  shoulder_hours: [7, 8, 9, 10, 11, 15, 16]
+  off_peak_hours: [0, 1, 2, 3, 4, 5, 6, 12, 13, 14, 22, 23]
+
+demand:
+  energy_price: 0.25          # $/kWh
+  demand_price_per_kw: 10.00  
+
+feed_in:
+  price_per_kwh: 0.10

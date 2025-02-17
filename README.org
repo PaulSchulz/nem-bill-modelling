@@ -37,56 +37,82 @@ The checkout the repository.
   git clone https://github.com/PaulSchulz/nem-bill-modelling
 #+end_src
 
-  
 *** Virtual Environment (venv) - Preferred
 Depending on your Python environment, it might also be worthwhile using a
 virtual environment, prior to installing additional requirements, by using:
 
 #+BEGIN_SRC sh
-  python -m venv venv
+  python3 -m venv venv
   . venv/bin/activate
 #+END_SRC
 
 *** Configuration
-The database configuration is stored in `config.yaml`:
+The 'config.yaml' file stores global configuration parameters. These can be
+edited to change where files are stored. etc.
 
 #+BEGIN_SRC yaml
-database:
-  path: data.db
-#+END_SRC
-
-Modify this file if you wish to change the database path.
-
-This configuration files also contains details of the year and download
-location for the downloaded AEMO CSV files.
-
-#+BEGIN_SRC yaml
+---
+debug: True
 data:
   year: 2024
-  path: ./data
+  path: ./data/download
+database:
+  path: ./data/data.db
 #+END_SRC
 
-** Usage
+** Setup
 *** Step 1: Download Data
-Run the script to download CSV files from AEMO:
+Run the script to download CSV files from AEMO for the year of interest.
 
 #+BEGIN_SRC sh
-python download_data.py
+python3 src/scripts/get-aemo-data.py
 #+END_SRC
 
-*** Step 2: Import Data into SQLite
-After downloading, import the data into the SQLite database:
-
+*** Step 2: Create SQLite3 database
 #+BEGIN_SRC sh
-python import_data.py
+  python3 src/scrpts/create-db.py
 #+END_SRC
 
-*** Step 3: Aggregate Data
-Run the aggregation script to calculate hourly statistics:
-
+*** Step 3: Import Data into SQLite3 database
 #+BEGIN_SRC sh
-python hourly_aggregation_query.py
+  python3 src/scripts/import-aemo-data.py
 #+END_SRC
+
+*** Step 4: Generate aggregate hourly pricing data
+#+BEGIN_SRC sh
+python3 hourly_aggregation_query.py
+#+END_SRC
+
+** Bill Generation and Simulation 
+
+Edit the 'tariffs.ymal' directory to reflect the available electricity tariffs.
+
+#+begin_src yaml
+  ---
+  flat_rate:
+    price_per_kwh: 0.30
+
+  tou:
+    peak_price: 0.50
+    shoulder_price: 0.35
+    off_peak_price: 0.20
+    peak_hours: [17, 18, 19, 20, 21]
+    shoulder_hours: [7, 8, 9, 10, 11, 15, 16]
+    off_peak_hours: [0, 1, 2, 3, 4, 5, 6, 12, 13, 14, 22, 23]
+
+  demand:
+    energy_price: 0.25
+    demand_price_per_kw: 10.00
+
+  feed_in:
+    price_per_kwh: 0.10
+#+end_src
+
+Run the simulation script.
+
+#+begin_src sh
+  python3 src/modelling/simulate_bill.py
+#+end_src
 
 ** Output
 The aggregated data is stored in the `price_and_demand_aggregation` table in
