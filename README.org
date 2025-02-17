@@ -17,7 +17,7 @@ In Python:
   - Count of records per hour
 
 ** Installation
-*** Prerequisites
+*** Direct Install
 Ensure you have Python3 installed along with the required dependencies. You can
 install them using:
 
@@ -29,6 +29,9 @@ Key dependencies include:
 - sqlite3 (for database operations)
 - PyYAML (for configuration parsing)
 
+The checkout the repository.
+  
+*** Virtual Environment (venv) - Preferred
 Depending on your Python environment, it might also be worthwhile using a
 virtual environment, prior to installing additional requirements, by using:
 
