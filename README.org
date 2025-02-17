@@ -1,6 +1,9 @@
-* NEM Modelling
+* NEM Bill Modelling
 
 ** Overview
+This project aim to be able to reproduce an energy bill for a billing period
+using available pricing and tariff data. 
+
 This repository contains Python scripts to download, process, and aggregate
 electricity price and demand data from the Australian Energy Market Operator
 (AEMO). The scripts store the processed data in an SQLite database and provide
@@ -30,6 +33,10 @@ Key dependencies include:
 - PyYAML (for configuration parsing)
 
 The checkout the repository.
+#+begin_src shell
+  git clone https://github.com/PaulSchulz/nem-bill-modelling
+#+end_src
+
   
 *** Virtual Environment (venv) - Preferred
 Depending on your Python environment, it might also be worthwhile using a
